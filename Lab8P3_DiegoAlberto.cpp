@@ -13,6 +13,12 @@ void mostrarMenuRecursivo();
 void ejercicio1();
 void limpiarMemoria();
 
+void limpiarMemoria(Partido* partidos[], Candidato* candidatos[]) {
+    for (int i = 0; i < 5; i++ ) {
+		delete partidos[i];
+		delete candidatos[i];
+    };
+}
 
 void mostrarMenuRecursivo() {
     cout << "==================== MENU PRINCIPAL ====================\n";
@@ -89,12 +95,36 @@ void ejercicio1() {
     for (int i = 0; i < 18; i++) {
 		Departamento* depto = departamentos[i];
         int totalVotos = depto->registrarActa();
-        for (int vot = 0; vot < totalVotos, vot++){
+        for (int vot = 0; vot < totalVotos; vot++) {
 			int candidatoIndex = rand() % 5; // Selecciona un candidato aleatorio
 			(*listaCandidatos[candidatoIndex])++;
         };
+
+        for (int k = 0; k < 5; k++) {
+            cout << "Candidato: " << listaCandidatos[k]->getNombre()
+                 << " del partido " << listaCandidatos[k]->getPartido()->getNombre()
+				<< " tiene " << listaCandidatos[k]->getVotos() << " votos.\n";
+        };
+        if (i < 17) {
+			cout << "-------Continuar simulacion-------"<< "1 si; else no"<<endl;
+			int cont;
+			cin >> cont;
+            if (cont != 1) {
+                break;
+
+            };
+
+        };
     };
-	
+	Candidato* ganador = listaCandidatos[0];
+    for (int i = 1; i < 5; i++) {
+        if (listaCandidatos[i]->getVotos() > ganador->getVotos()) {
+            ganador = listaCandidatos[i];
+        };
+    };
+    cout << "El ganador de las elecciones es: " << ganador->getNombre()
+         << " del partido " << ganador->getPartido()->getNombre()
+		<< " con " << ganador->getVotos() << " votos." << endl;
 };
 
 
